@@ -113,5 +113,5 @@ dist
 .pnp.*
 
 assets/
-cfg/
+cfg/*
 dist_bin/

@@ -13,7 +13,7 @@ class ConfigController {
            await MongoConfigStorage.save(configData);
            res.json({
             isConfigured: await MongoConnectionFactory.isInitialized(),
-            connectionString: ""
+            connectionString: "ok"
           });
         } else{
           res.status(400).json({
@@ -31,7 +31,7 @@ class ConfigController {
         
         res.json({
             isConfigured: await MongoConnectionFactory.isInitialized(),
-            connectionString: "",
+            connectionString: "ok",
             isConnectionStringEditLocked: config.isConnectionStringEditLocked
         });
       } catch (error) {
