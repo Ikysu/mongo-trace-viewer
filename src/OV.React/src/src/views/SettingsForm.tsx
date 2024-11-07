@@ -12,18 +12,9 @@ export interface SettingsFormProps {
 }
 
 export function SettingsForm(props: SettingsFormProps){
-
-    const [connectionString, setConnectionString] = useState(props.value.connectionString);
-
-    const saveSettings = () => {
-        props.onSave({
-            connectionString: connectionString
-        })
-    }
-
-    return <form onSubmit={(e: React.FormEvent) => { e.preventDefault(); saveSettings() }} autoComplete="off">
+    return <form onSubmit={(e: React.FormEvent) => { e.preventDefault(); window.location.reload() }} autoComplete="off">
         <InputGroup className="oplog-settings-group">
-            <TextInput name="connectionString" onChange={setConnectionString} value={connectionString} label="Mongo connection string:" />
+            <TextInput name="connectionString" label="Mongo connection string:" />
             <div className="oplog-settings__connection-string-example">For example: mongodb://localhost:27017</div>
         </InputGroup>
         <ButtonsGroup className="oplog-settings-buttons-group">
