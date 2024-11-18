@@ -3,9 +3,9 @@ LABEL stage=temp-build
 
 WORKDIR /usr/src/app
 COPY ./src/OV.React/package.json ./src/OV.React/package-lock.json ./
-RUN npm ci 
+RUN npm ci
 COPY ./src/OV.React/ .
-RUN npm run build 
+RUN npm run build
 
 FROM node:16.1-alpine3.11 AS backendbuild
 LABEL stage=temp-build
@@ -26,7 +26,11 @@ WORKDIR /usr/src/app
 COPY --from=backendbuild --chown=oploguser /usr/src/app/build/ ./build
 COPY --from=backendbuild --chown=oploguser /usr/src/app/node_modules/ ./node_modules
 
+RUN mkdir -p /usr/src/app/cfg
+RUN echo "{}" > /usr/src/app/cfg/mongoConfig.json
 RUN chown oploguser /usr/src/app
+RUN chown oploguser /usr/src/app/cfg
+RUN chown oploguser /usr/src/app/cfg/mongoConfig.json
 USER oploguser
 
 ENV PORT=80
