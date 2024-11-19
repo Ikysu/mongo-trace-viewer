@@ -28,6 +28,7 @@ export class App extends React.Component<AppProps, AppState> {
         this.serviceContainer = new ServiceContainer();
         this.settingsContainer = new SettingsContainer(this.serviceContainer);
         this.filterContainer = new OplogFilterContainer(this.serviceContainer);
+        window._RELOADPREFILL = this.filterContainer.reloadPrefillInfo
         this.oplogContainer = new OplogContainer(this.filterContainer, this.serviceContainer);
     }
 

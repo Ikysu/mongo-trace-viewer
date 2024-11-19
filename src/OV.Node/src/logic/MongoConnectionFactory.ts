@@ -1,10 +1,13 @@
 import { MongoClient } from "mongodb";
 import MongoConfigStorage from "./MongoConfigStorage"
+import { logger } from "../utils/Logger";
 class MongoConnectionFactory {
 
-    public async isConnectionStringValid(connectionString: string) {
+    public async isConnectionStringValid(name: string) {
         try {
-            const client = new MongoClient(connectionString);
+            const uri = await MongoConfigStorage.getRealStringFromPseudo(name);
+
+            const client = new MongoClient(uri);
 
             await client.connect();
 
@@ -31,8 +34,8 @@ class MongoConnectionFactory {
     }
 
     public async getConnection(): Promise<MongoClient> {
-        const config = await MongoConfigStorage.get();
-        const uri = config.connectionString;
+        const {cfg} = await MongoConfigStorage.get();
+        const uri = await MongoConfigStorage.getRealStringFromPseudo(cfg.name);
 
         const client = new MongoClient(uri);
 

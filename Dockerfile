@@ -19,19 +19,11 @@ RUN npm run build
 RUN npm prune --production
 
 FROM node:16-alpine3.11 AS publish
-RUN adduser -D oploguser
 WORKDIR /usr/src/app
 
 
 COPY --from=backendbuild --chown=oploguser /usr/src/app/build/ ./build
 COPY --from=backendbuild --chown=oploguser /usr/src/app/node_modules/ ./node_modules
-
-RUN mkdir -p /usr/src/app/cfg
-RUN echo "{}" > /usr/src/app/cfg/mongoConfig.json
-RUN chown oploguser /usr/src/app
-RUN chown oploguser /usr/src/app/cfg
-RUN chown oploguser /usr/src/app/cfg/mongoConfig.json
-USER oploguser
 
 ENV PORT=80
 ENV NODE_ENV=production

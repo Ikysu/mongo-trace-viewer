@@ -1,48 +1,51 @@
-import { MongoConfig } from "../models/MongoConfig";
+import { ConfigFile, MongoConfig } from "../models/MongoConfig";
 import fs from 'fs';
 import util  from 'util';
 import { writeFileAsyncRecursive } from "../utils/Utils";
 import path from "path";
+import { logger } from "../utils/Logger";
 
 class MongoConfigStorage {
-    private static readonly pathToConfig = path.join(process.cwd(), "cfg/mongoConfig.json");
+    private static readonly pathToConfig = path.join(process.cwd(), "cfg/config.json");
     private getConnectionStringFromEnv(): string | null {
         return process.env.MONGO_CONNECTION_STRING || null;
+    }
+
+    async getRealStringFromPseudo(name: string): Promise<string> {
+        let out: string = ""
+        try {
+            const result = fs.readFileSync(MongoConfigStorage.pathToConfig);
+            const list = JSON.parse(result.toString('utf8'))
+            out = list.strings[name].url || ""
+        } finally {
+            return out
+        }
     }
     
     async save(cfg: MongoConfig): Promise<void> {
         if(this.getConnectionStringFromEnv()){
             return;
         }
-        await writeFileAsyncRecursive(MongoConfigStorage.pathToConfig, JSON.stringify(cfg));
+        await writeFileAsyncRecursive(MongoConfigStorage.pathToConfig, cfg);
     }
 
-    async get() : Promise<MongoConfig> {
-        const envConnectionString = this.getConnectionStringFromEnv();
-
-        if(envConnectionString){
-            return {
-                connectionString: envConnectionString,
-                isConnectionStringEditLocked: true
-            }
-        }
-
+    async get() : Promise<ConfigFile> {
         try{
-            const readFile = util.promisify(fs.readFile);
-            const result = await readFile(MongoConfigStorage.pathToConfig);
-            const str = result.toString('utf8');
-            return {
-                ...JSON.parse(str),
-                isConnectionStringEditLocked: false
-            };
+            const str = fs.readFileSync(MongoConfigStorage.pathToConfig);
+            return JSON.parse(str.toString('utf8'));
         }
         catch{
             return {
-                connectionString: "",
-                isConnectionStringEditLocked: false
+                strings: {},
+                cfg: {
+                    name: "",
+                    isConnectionStringEditLocked: false
+                }
             };
         }
     }
+
+    
 }
 
 export default new MongoConfigStorage();

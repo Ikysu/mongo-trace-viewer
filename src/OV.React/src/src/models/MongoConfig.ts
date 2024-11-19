@@ -1,3 +1,3 @@
 export interface MongoConfig {
-    connectionString: string;
+    name: string;
 }

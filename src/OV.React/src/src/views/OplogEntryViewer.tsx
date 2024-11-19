@@ -44,7 +44,7 @@ export class OplogEntryViewer extends React.Component<OplogEntryProps, OplogEntr
             ) {
             changesMarkup = <div className="oplog-operation__changes-container">
                 <span className="oplog-operation__changes-label">Changes:</span>
-                <ReactJson src={operationInfo.operation} name={null} displayDataTypes={false} sortKeys={true} collapsed={true} />
+                <ReactJson src={operationInfo.operation} name={null} displayDataTypes={false} sortKeys={true} collapsed={false} theme="brewer" />
             </div>
         }
 

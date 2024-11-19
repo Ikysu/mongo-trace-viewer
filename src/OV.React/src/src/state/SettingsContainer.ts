@@ -9,14 +9,19 @@ export interface SettingsContainerState {
     settings: SettingsModel,
     isConfigured: boolean,
     isSettingsOpened : boolean,
-    isConnectionStringEditLocked: boolean
+    isConnectionStringEditLocked: boolean,
+    servers: Array<{
+        name: string,
+        value: string
+    }>
 }
 
 export class SettingsContainer extends BaseContainer<SettingsContainerState> {
     state: SettingsContainerState = {
         settings: {
-            connectionString: ""
+            name: ""
         },
+        servers: [],
         isConfigured: false,
         isSettingsOpened: false,
         isConnectionStringEditLocked: false
@@ -32,8 +37,9 @@ export class SettingsContainer extends BaseContainer<SettingsContainerState> {
         await this.setState({
             isConfigured: configStatus.isConfigured,
             settings: {
-                connectionString: configStatus.connectionString ?? ""
+                name: configStatus.name ?? ""
             },
+            servers: configStatus.list,
             isSettingsOpened: configStatus.isConfigured === false && !configStatus.isConnectionStringEditLocked,
             isConnectionStringEditLocked: configStatus.isConnectionStringEditLocked
         });
@@ -61,16 +67,16 @@ export class SettingsContainer extends BaseContainer<SettingsContainerState> {
 
     saveSettings = async (model: SettingsModel) => {
         const result = await this.makeRequest(() => ConfigService.saveConfig({
-            connectionString: model.connectionString
+            name: model.name
         }));
 
-        const isConnectionStringChanged = result.connectionString != this.state.settings.connectionString
+        const isConnectionStringChanged = result.name != this.state.settings.name
             && result.isConfigured === true;
 
         await this.setState({
             isConfigured: result.isConfigured,
             settings: {
-                connectionString: result.connectionString ?? ""
+                name: result.name ?? ""
             },
             isSettingsOpened: result.isConfigured === false
         });

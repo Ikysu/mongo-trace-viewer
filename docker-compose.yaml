@@ -3,3 +3,5 @@ services:
     build: .
     ports:
       - "63333:80"
+    volumes:
+      - ./cfg:/usr/src/app/cfg

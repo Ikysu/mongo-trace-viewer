@@ -16,7 +16,7 @@ export function OplogSettingsPanel() {
                     <Modal isOpened={settings.state.isSettingsOpened} onClose={() => settings.closeSettings()} hideCloseButton={!settings.isSettingsValid()}>
                         <div className="settings__popup-container">
                             <h1>Settings</h1>
-                            <SettingsForm onSave={settings.saveSettings} value={settings.state.settings}></SettingsForm>
+                            <SettingsForm servers={settings.state.servers} onSave={settings.saveSettings} value={settings.state.settings}></SettingsForm>
                         </div>
                     </Modal>
                 </div>

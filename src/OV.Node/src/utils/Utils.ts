@@ -1,11 +1,23 @@
 import path from 'path';
 import fs from 'fs';
+import { MongoConfig } from '../models/MongoConfig';
 
-export const writeFileAsyncRecursive = (filename: string, content: string) => {
+export const writeFileAsyncRecursive = (filename: string, content: MongoConfig) => {
   const folders = filename.split(path.sep).slice(0, -1).join(path.sep)
   fs.mkdirSync(folders, {recursive:true})
 
-  fs.writeFileSync(filename, content, {
+  let out = {
+    strings: {},
+    cfg: content
+  }
+
+  if(fs.existsSync(filename)) {
+    const result = fs.readFileSync(filename);
+    const {strings} = JSON.parse(result.toString('utf8'))
+    out.strings = strings
+  }
+
+  fs.writeFileSync(filename, JSON.stringify(out, null, 2), {
     encoding: "utf8",
     flag: 'w'
   });

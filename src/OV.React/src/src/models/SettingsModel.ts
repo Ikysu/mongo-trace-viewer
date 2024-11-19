@@ -1,3 +1,3 @@
 export interface SettingsModel{
-    connectionString: string
+    name: string
 }
