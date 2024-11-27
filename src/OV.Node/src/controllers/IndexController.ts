@@ -94,6 +94,28 @@ class IndexController {
         ]
       }
 
+      const specialFilter = filter.specialQuery ? filter.specialQuery.split(",").map(key=>({
+        $or: [
+          { 
+            [`o.diff.u.${key}`]: {
+              $exists: true
+            },
+          },
+          { 
+            [`o.${key}`]: {
+              $exists: true
+            },
+          }
+        ]
+      })) : []
+
+      const recordByQueryFilter = {
+        $and: [
+          namespaceFilter ? {ns: namespaceFilter} : {},
+          ...specialFilter
+        ]
+      }
+
       const recordIdNamespaceWithInnerEntriesFilter = {
         $or: [
           recordIdNamespaceFilter,
@@ -114,6 +136,7 @@ class IndexController {
             {...(this.getMinDateFilter(filter))},
             {...(this.getMaxDateFilter(filter))},
             recordIdNamespaceWithInnerEntriesFilter ?? {},
+            (specialFilter.length > 0 ? recordByQueryFilter : {})
           ]
         }
       },

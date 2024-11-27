@@ -4,6 +4,7 @@ export interface OplogFilterModel {
     database: string;
     collection: string;
     recordId: string | null;
+    specialQuery: string | null;
     maxTimestamp: string | null;
     minTimestamp: string | null;
     startDate: Date | null;
