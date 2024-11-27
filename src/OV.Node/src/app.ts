@@ -10,12 +10,12 @@ import favicon from 'serve-favicon'
 
 class App {
   public app: express.Application;
-  public port: string | number;
+  public port: number;
   public env: string;
 
   constructor(routes: Route[]) {
     this.app = express();
-    this.port = process.env.PORT || 3000;
+    this.port = Number(process.env.PORT) || 3000;
     this.env = process.env.NODE_ENV || 'development';
     this.app.use(favicon(path.join(__dirname, "public/favicon.png")))
     this.app.use(express.static(path.join(__dirname, '/assets')));
@@ -35,7 +35,7 @@ class App {
   }
 
   public listen() {
-    this.app.listen(this.port, () => {
+    this.app.listen(this.port, "0.0.0.0", () => {
       logger.info(`App listening on the port ${this.port}`);
     });
   }

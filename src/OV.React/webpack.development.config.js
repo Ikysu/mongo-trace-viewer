@@ -9,7 +9,7 @@ module.exports = merge(common, {
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
-        port: 9000
+        writeToDisk: true
     },
     plugins: [
         // add the plugin to your plugins array

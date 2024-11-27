@@ -20,7 +20,8 @@
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
     "package": "npm run build && pkg package.json",
-    "copy_assets": "copyfiles --error --up 1 src/assets/*.* build && copyfiles --error --up 1 src/public/*.* build"
+    "copy_assets": "copyfiles --error --up 1 src/assets/*.* build && copyfiles --error --up 1 src/public/*.* build",
+    "docker": "npm i && npm run dev"
   },
   "repository": {
     "type": "git",
