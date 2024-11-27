@@ -7,6 +7,7 @@ export interface OplogFilterRequest {
     maxTimestamp: string | null;
     minTimestamp: string | null;
     startDate: Date | null;
+    specialQuery: string | null;
     endDate: Date | null;
     paging: PagingModel;
 }

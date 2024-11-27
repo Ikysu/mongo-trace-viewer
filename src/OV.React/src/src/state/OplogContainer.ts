@@ -109,6 +109,7 @@ export class OplogContainer extends BaseContainer<OplogContainerState> {
             endDate: currentFilter.endDate || null,
             maxTimestamp: maxTimestamp ?? null,
             minTimestamp: minTimestamp ?? null,
+            specialQuery: currentFilter.specialQuery || null,
             paging: {
                 ascending: false,
                 orderBy: "ts",

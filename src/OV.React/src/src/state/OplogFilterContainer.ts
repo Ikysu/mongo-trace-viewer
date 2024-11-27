@@ -19,6 +19,7 @@ export class OplogFilterContainer extends BaseContainer<OplogFilterContainerStat
             collection: "",
             database: "",
             recordId: "",
+            specialQuery: "",
             filterId: "",
             startDate: null,
             endDate: null
@@ -27,6 +28,7 @@ export class OplogFilterContainer extends BaseContainer<OplogFilterContainerStat
             collection: "",
             database: "",
             recordId: "",
+            specialQuery: "",
             filterId: "",
             startDate: null,
             endDate: null
@@ -79,7 +81,8 @@ export class OplogFilterContainer extends BaseContainer<OplogFilterContainerStat
                 endDate: null,
                 startDate: null,
                 filterId: "",
-                recordId: ""
+                recordId: "",
+                specialQuery: ""
             }
         });
 
@@ -153,7 +156,8 @@ export class OplogFilterContainer extends BaseContainer<OplogFilterContainerStat
                 ...this.state.searchFilter,
                 database: value,
                 collection: "",
-                recordId: ""
+                recordId: "",
+                specialQuery: ""
             }
         });
 
@@ -165,7 +169,8 @@ export class OplogFilterContainer extends BaseContainer<OplogFilterContainerStat
             searchFilter: {
                 ...this.state.searchFilter,
                 collection: value,
-                recordId: ""
+                recordId: "",
+                specialQuery: ""
             }
         })
         await this.onSearchFilterChange();
@@ -176,6 +181,16 @@ export class OplogFilterContainer extends BaseContainer<OplogFilterContainerStat
             searchFilter: {
                 ...this.state.searchFilter,
                 recordId: value
+            }
+        })
+        await this.onSearchFilterChange();
+    }
+
+    setSpecialQuery = async (value: string) => {
+        await this.setState({
+            searchFilter: {
+                ...this.state.searchFilter,
+                specialQuery: value
             }
         })
         await this.onSearchFilterChange();

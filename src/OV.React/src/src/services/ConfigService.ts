@@ -4,10 +4,10 @@ import { HttpUtility } from "./HttpUtility";
 
 export class ConfigService {
     public static getConfigStatus(): Promise<ConfigStatusResponse>{
-        return HttpUtility.get(HttpUtility.makeUrl("config/status"));
+        return HttpUtility.get('/config/status');
     }
 
     public static saveConfig(model: MongoConfig): Promise<ConfigStatusResponse>{
-        return HttpUtility.post(HttpUtility.makeUrl("config/save"), model);
+        return HttpUtility.post('/config/save', model);
     }
 }

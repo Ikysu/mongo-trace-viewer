@@ -5,10 +5,10 @@ import { HttpUtility } from "./HttpUtility";
 
 export class OplogService {
     public static getOplog(filter: OplogFilterRequest): Promise<OplogListResponse> {
-        return HttpUtility.post(HttpUtility.makeUrl("db"), filter);
+        return HttpUtility.post("/db", filter);
     }
 
     public static prefill(): Promise<PrefillResponse> {
-        return HttpUtility.get(HttpUtility.makeUrl("db/prefill"));
+        return HttpUtility.get("/db/prefill");
     }
 }
