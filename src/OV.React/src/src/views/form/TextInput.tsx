@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 
 import "./textInput.styl"
 
@@ -10,12 +10,20 @@ export interface TextInputProps {
     type?: string;
     label: string;
     className?: string;
+    placeholder?: string;
 }
 
 export function TextInput(props: TextInputProps) {
     return (<div className={`form-input form-text ${props.className ?? ""}`}>
         {!!props.label && <label htmlFor={props.id ?? props.name}>{props.label}</label>}
-        <input className="text-input"  name={props.name} id={props.id ?? props.name} type={props.type ?? "text"} value={props.value} onChange={(e) => props.onChange(e.target.value)} />
+        <input 
+            className="text-input" 
+            name={props.name} 
+            id={props.id ?? props.name} 
+            type={props.type ?? "text"} 
+            onChange={(e) => {e.preventDefault(); props.onChange(e.target.value)}} 
+            placeholder={props.placeholder}
+        />
     </div>
     );
 }

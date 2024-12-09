@@ -26,10 +26,10 @@ export function OplogFilters() {
                         <InputGroup className="oplog-filters-group">
                             <Select name="databaseName" onChange={filters.setDatabase} pleaseSelectLabel="Please select..." value={filters.searchFilter.database} options={filters.getDatabaseOptions()} label="Database:" />
                             <Select name="collectionName" onChange={filters.setCollection} pleaseSelectLabel="Please select..." value={filters.searchFilter.collection} options={filters.getCollectionOptions()} label="Collection:" />
-                            <TextInput name="recordId" onChange={filters.setRecordId} value={filters.searchFilter.recordId} label="Record id:" />
+                            <TextInput name="recordId" onChange={filters.setRecordId} value={filters.searchFilter.recordId} label="_id / userId / owner:" />
                             <DateTimePicker name="startDate" onChange={filters.setStartDate} value={filters.searchFilter.startDate} label={"Min date:"}></DateTimePicker>
                             <DateTimePicker name="endDate" onChange={filters.setEndDate} value={filters.searchFilter.endDate} label={"Max date:"}></DateTimePicker>
-                            <TextInput name="specialQuery" onChange={filters.setSpecialQuery} value={filters.searchFilter.specialQuery} label="Query:" />
+                            <TextInput name="specialQuery" onChange={filters.setSpecialQuery} value={filters.searchFilter.specialQuery} label="Query:" placeholder={`{"#.balance.ton":{"$exists":true}}`} />
                         </InputGroup>
                         <ButtonsGroup className="oplog-filters-buttons-group">
                             <Tooltip disabled={filters.isSearchAndCurrentFilterTheSame()} text={"The filter has been changed. Click to apply"} >

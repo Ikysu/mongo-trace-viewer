@@ -89,25 +89,56 @@ class IndexController {
             $or: [
               { "o2._id": id },
               { "o._id": id },
+              { "o.diff.u._id": id },
+              { "o2.userId": id },
+              { "o.userId": id },
+              { "o.diff.u.userId": id },
+              { "o2.owner": id },
+              { "o.owner": id },
+              { "o.diff.u.owner": id },
             ]
           } : {}
         ]
       }
 
-      const specialFilter = filter.specialQuery ? filter.specialQuery.split(",").map(key=>({
-        $or: [
-          { 
-            [`o.diff.u.${key}`]: {
-              $exists: true
-            },
-          },
-          { 
-            [`o.${key}`]: {
-              $exists: true
-            },
-          }
-        ]
-      })) : []
+      // const specialFilter = filter.specialQuery ? filter.specialQuery.split(",").map(key=>({
+      //   $or: [
+      //     { 
+      //       [`o.diff.u.${key}`]: {
+      //         $exists: true
+      //       },
+      //     },
+      //     { 
+      //       [`o.${key}`]: {
+      //         $exists: true
+      //       },
+      //     }
+      //   ]
+      // })) : []
+
+      let specialFilter = []
+
+      if(filter.specialQuery) {
+        try {
+          let j = JSON.parse(filter.specialQuery)
+          specialFilter = Object.keys(j).map(key=>({
+            $or: [
+              { 
+                [`o.diff.u.${key}`]: {
+                  $exists: true
+                },
+              },
+              { 
+                [`o.${key}`]: {
+                  $exists: true
+                },
+              }
+            ]
+          }))
+        } catch {
+          
+        }
+      }
 
       const recordByQueryFilter = {
         $and: [
