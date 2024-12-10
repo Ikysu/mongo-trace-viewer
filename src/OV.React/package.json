@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack serve --config webpack.development.config.js",
     "build": "webpack --config webpack.production.config.js",
-    "docker": "npm i && npm run start"
+    "docker": "npm i && npm run start",
+    "docker:prod": "npm i && npm run build"
   },
   "keywords": [],
   "author": "",
