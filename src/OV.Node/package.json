@@ -21,7 +21,8 @@
     "lint:fix": "npm run lint -- --fix",
     "package": "npm run build && pkg package.json",
     "copy_assets": "copyfiles --error --up 1 src/assets/*.* build && copyfiles --error --up 1 src/public/*.* build",
-    "docker": "npm i && npm run dev"
+    "docker": "npm i && npm run dev",
+    "docker:prod": "npm i && npm run start"
   },
   "repository": {
     "type": "git",
