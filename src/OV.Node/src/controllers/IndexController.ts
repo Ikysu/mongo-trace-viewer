@@ -96,6 +96,8 @@ class IndexController {
               { "o2.owner": id },
               { "o.owner": id },
               { "o.diff.u.owner": id },
+              { "o.user_id": id },
+              { "o.diff.u.user_id": id },
             ]
           } : {}
         ]
