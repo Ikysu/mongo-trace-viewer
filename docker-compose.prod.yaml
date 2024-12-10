@@ -1,0 +1,22 @@
+services:
+  frontend:
+    image: node:16.1-alpine3.11
+    working_dir: /usr/src/app
+    command: npm run docker:prod
+    volumes:
+      - ./src/OV.React:/usr/src/app
+      - ./cfg:/usr/src/app/cfg
+
+  backend:
+    image: node:16.1-alpine3.11
+    working_dir: /usr/src/app
+    command: npm run docker:prod
+    ports:
+      - "63333:80"
+    volumes:
+      - ./src/OV.Node:/usr/src/app
+      - ./src/OV.React/dist:/usr/src/app/src/assets
+      - ./cfg:/usr/src/app/cfg
+    depends_on:
+      frontend:
+        condition: service_completed_successfully
